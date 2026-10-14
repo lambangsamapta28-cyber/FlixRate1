@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlixRate - Streaming & Review</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top navbar-solid">
+        <div class="container-fluid px-4">
+            <a class="navbar-brand" href="#" onclick="showHome()">
+                <span class="text-flix">FLIX</span><span class="text-rate">RATE</span>
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto gap-3">
+                    <li class="nav-item"><a class="nav-link active" id="navHome" href="#" onclick="showHome()">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" id="navFilms" href="#" onclick="showFilms()">Film</a></li>
+                    <li class="nav-item"><a class="nav-link d-none text-warning" id="adminLink" href="#" onclick="showAdminDashboard()">Dashboard</a></li>
+                </ul>
+                
+                <div id="authSection" class="d-flex gap-2 align-items-center">
+                    <a href="https://www.instagram.com/flixrate.id/" target="_blank" class="btn btn-outline-light btn-sm border-0 me-2" title="Kunjungi Instagram Kami">
+                        <i class="fab fa-instagram fa-lg"></i>
+                    </a>
+
+                    <span id="welcomeText" class="me-2 small text-muted"></span>
+                    <button id="loginBtn" class="btn btn-warning btn-sm fw-bold" onclick="showLogin()">Sign In</button>
+                    <button id="logoutBtn" class="btn btn-outline-light btn-sm d-none" onclick="logout()">Sign Out</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div id="homePage">
+        <header id="heroBanner" class="hero-section">
+            <div class="hero-overlay"></div>
+            <div class="container-fluid">
+                <div class="hero-content">
+                    <span class="badge bg-warning text-dark mb-3">Editor's Choice</span>
+                    <h1 class="display-3 fw-bold" id="heroTitle">Loading...</h1>
+                    <p class="lead text-light" id="heroDesc" style="text-shadow: 1px 1px 2px black;">...</p>
+                    <div class="mt-4">
+                        <a id="heroDetail" href="#" class="btn btn-secondary btn-lg bg-opacity-50 px-4"><i class="fas fa-info-circle me-2"></i> Detail</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="container-fluid px-4 mt-5 pb-5">
+            <h4 class="mb-3 fw-bold text-white border-start border-4 border-warning ps-3">Trending Now <i class="fas fa-fire text-warning"></i></h4>
+            <div class="scrolling-wrapper" id="recommendationList">
+                <p class="text-muted">Memuat film...</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="filmsPage" class="d-none container-fluid px-4 mt-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="fw-bold"><span class="text-flix">FLIX</span><span class="text-rate">RATE</span> Catalogue</h2>
+            <div class="d-flex gap-2">
+                <select class="form-select search-box" style="width: 150px;" id="genreFilter" onchange="filterMovies()">
+                    <option value="All" selected>All Genres</option>
+                    <option value="Action">Action</option>
+                    <option value="Drama">Drama</option>
+                    <option value="Sci-Fi">Sci-Fi</option>
+                    <option value="Animation">Animation</option>
+                </select>
+                <input type="text" class="form-control search-box" placeholder="Search Film..." style="width: 250px;" onkeyup="searchMovie(this.value)">
+            </div>
+        </div>
+        <div id="movieGrid" class="row g-4 mb-5"></div>
+    </div>
+
+    <div id="loginPage" class="container d-none mt-5 text-center">
+        <div class="card bg-dark text-white p-5 mx-auto border-secondary shadow-lg" style="max-width: 450px;">
+            <h3 class="mb-4 fw-bold">Sign In</h3>
+            <input type="text" id="loginUser" class="form-control my-2 bg-secondary text-white border-0 py-2" placeholder="Username">
+            <input type="password" id="loginPass" class="form-control my-2 bg-secondary text-white border-0 py-2" placeholder="Password">
+            <button onclick="login()" class="btn btn-warning w-100 mt-4 py-2 fw-bold">Sign In</button>
+            
+            <p class="mt-4 small text-muted">Don't Have an Account Yet?</p>
+            <button onclick="showRegister()" class="btn btn-outline-light w-100 btn-sm">Sign Up Now</button>
+            <button onclick="showHome()" class="btn btn-link text-secondary text-decoration-none mt-2">Cancel</button>
+        </div>
+    </div>
+
+    <div id="registerPage" class="container d-none mt-5 text-center">
+        <div class="card bg-dark text-white p-5 mx-auto border-warning shadow-lg" style="max-width: 450px;">
+            <h3 class="mb-4 fw-bold text-flix">Create New Account</h3>
+            <input type="text" id="regUser" class="form-control my-2 bg-secondary text-white border-0 py-2" placeholder="Username Baru">
+            <input type="password" id="regPass" class="form-control my-2 bg-secondary text-white border-0 py-2" placeholder="Password">
+            <button onclick="register()" class="btn btn-warning w-100 mt-4 py-2 fw-bold">Sign Up</button>
+            
+            <p class="mt-4 small text-muted">Already Have an Account?</p>
+            <button onclick="showLogin()" class="btn btn-outline-light w-100 btn-sm">Login Here</button>
+        </div>
+    </div>
+
+    <div id="adminPage" class="container d-none mt-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Dashboard Admin</h2>
+            <button onclick="showHome()" class="btn btn-outline-light btn-sm">Close</button>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card bg-dark text-white border-secondary mb-4">
+                    <div class="card-header border-secondary">User Rating Data</div>
+                    <div class="card-body p-0">
+                        <table class="table table-dark table-striped table-hover mb-0">
+                            <thead><tr><th>Title</th><th>User</th><th>Rating</th></tr></thead>
+                            <tbody id="ratingTable">
+                                <tr><td colspan="3" class="text-center text-muted">Memuat data...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card bg-dark text-white border-secondary">
+                    <div class="card-header border-secondary">Database User</div>
+                    <div class="card-body p-0">
+                        <ul id="userList" class="list-group list-group-flush list-group-dark">
+                            <li class="list-group-item bg-dark text-white">Memuat data...</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-black text-center py-4 mt-5 border-top border-secondary" style="position: relative; z-index: 10;">
+        <div class="container">
+            <div class="mb-3">
+                <span class="fw-bold" style="font-size: 1.2rem;">
+                    <span class="text-flix">FLIX</span><span class="text-rate">RATE</span>
+                </span>
+            </div>
+            
+            <p class="text-white-50 small mb-3">
+                Platform review dan database film terbaik untuk pecinta sinema Indonesia.
+            </p>
+
+            <div class="mb-2">
+                <a href="https://www.instagram.com/flixrate.id/" target="_blank" class="text-decoration-none social-link">
+                    <i class="fab fa-instagram fa-lg text-warning"></i> 
+                    <span class="ms-2 fw-bold text-white">@flixrate.id</span>
+                </a>
+            </div>
+
+            <div class="mb-3">
+                <a href="https://wa.me/6287744653560" target="_blank" class="text-decoration-none social-link">
+                    <i class="fab fa-whatsapp fa-lg text-success"></i>
+                    <span class="ms-2 text-white">Admin: 0877-4465-3560</span>
+                </a>
+            </div>
+
+            <p class="text-muted small mt-4 mb-0">&copy; 2023 FlixRate Indonesia. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let movies = [];
+        let currentUser = null;
+
+        document.addEventListener("DOMContentLoaded", function() {
+            fetchMovies();
+            checkLoginStatus();
+        });
+
+        // --- FETCH DATA ---
+        function fetchMovies() {
+            fetch('api/get_movies.php')
+            .then(response => response.json())
+            .then(data => {
+                movies = data;
+                if(movies.length > 0) {
+                    loadHero();
+                    loadRecommendations();
+                    loadAllMovies(movies);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        // --- NAVIGASI ---
+        function hideAllPages() {
+            const pages = ['homePage', 'filmsPage', 'loginPage', 'registerPage', 'adminPage'];
+            pages.forEach(id => document.getElementById(id).classList.add('d-none'));
+            document.getElementById('navHome').classList.remove('active');
+            document.getElementById('navFilms').classList.remove('active');
+        }
+
+        function showHome() { hideAllPages(); document.getElementById('homePage').classList.remove('d-none'); document.getElementById('navHome').classList.add('active'); window.scrollTo(0,0); }
+        function showFilms() { hideAllPages(); document.getElementById('filmsPage').classList.remove('d-none'); document.getElementById('navFilms').classList.add('active'); window.scrollTo(0,0); }
+        function showLogin() { hideAllPages(); document.getElementById('loginPage').classList.remove('d-none'); }
+        function showRegister() { hideAllPages(); document.getElementById('registerPage').classList.remove('d-none'); }
+        
+        function showAdminDashboard() { 
+            hideAllPages(); 
+            document.getElementById('adminPage').classList.remove('d-none'); 
+            loadAdminData();
+        }
+
+        function loadAdminData() {
+            fetch('api/get_ratings.php')
+            .then(res => res.json())
+            .then(data => {
+                const table = document.getElementById('ratingTable');
+                table.innerHTML = '';
+                if(data.length === 0) table.innerHTML = '<tr><td colspan="3" class="text-center text-muted">Belum ada rating</td></tr>';
+                else data.forEach(r => table.innerHTML += `<tr><td>${r.title}</td><td>${r.username}</td><td class="text-warning">★ ${r.rating}</td></tr>`);
+            });
+
+            fetch('api/get_users.php')
+            .then(res => res.json())
+            .then(data => {
+                const list = document.getElementById('userList');
+                list.innerHTML = '';
+                data.forEach(u => {
+                    const badge = u.role === 'admin' ? 'bg-danger' : 'bg-secondary';
+                    list.innerHTML += `<li class="list-group-item bg-dark text-white d-flex justify-content-between"><span>${u.username}</span><span class="badge ${badge}">${u.role}</span></li>`;
+                });
+            });
+        }
+
+        // --- AUTH ---
+        function login() {
+            const u = document.getElementById('loginUser').value;
+            const p = document.getElementById('loginPass').value;
+            fetch('api/login.php', { method: 'POST', body: JSON.stringify({ username: u, password: p }) })
+            .then(res => res.json())
+            .then(response => {
+                if(response.status === 'success') {
+                    localStorage.setItem('currentUser', JSON.stringify(response.user));
+                    checkLoginStatus();
+                    if(response.user.role === 'admin') showAdminDashboard();
+                    else showHome();
+                } else alert(response.message);
+            });
+        }
+
+        function register() {
+            const u = document.getElementById('regUser').value;
+            const p = document.getElementById('regPass').value;
+            fetch('api/register.php', { method: 'POST', body: JSON.stringify({ username: u, password: p }) })
+            .then(res => res.json())
+            .then(response => {
+                if(response.status === 'success') { alert("Berhasil!"); showLogin(); }
+                else alert(response.message);
+            });
+        }
+
+        function logout() {
+            localStorage.removeItem('currentUser');
+            currentUser = null;
+            checkLoginStatus();
+            showHome();
+        }
+
+        function checkLoginStatus() {
+            const stored = localStorage.getItem('currentUser');
+            if (stored) {
+                currentUser = JSON.parse(stored);
+                document.getElementById('loginBtn').classList.add('d-none');
+                document.getElementById('logoutBtn').classList.remove('d-none');
+                document.getElementById('welcomeText').innerText = `Halo, ${currentUser.username}`;
+                if (currentUser.role === 'admin') document.getElementById('adminLink').classList.remove('d-none');
+            } else {
+                document.getElementById('loginBtn').classList.remove('d-none');
+                document.getElementById('logoutBtn').classList.add('d-none');
+                document.getElementById('adminLink').classList.add('d-none');
+                document.getElementById('welcomeText').innerText = '';
+            }
+        }
+
+        // --- FILM LOGIC ---
+        function loadHero() {
+            if(movies.length === 0) return;
+            const movie = movies[Math.floor(Math.random() * movies.length)];
+            const hero = document.getElementById('heroBanner');
+            hero.style.backgroundImage = `url('${movie.poster}')`;
+            document.getElementById('heroTitle').innerText = movie.title;
+            document.getElementById('heroDesc').innerText = movie.description || movie.desc;
+            document.getElementById('heroDetail').href = `film.html?id=${movie.id}`;
+        }
+
+        function loadRecommendations() {
+            const container = document.getElementById('recommendationList');
+            container.innerHTML = '';
+            const recs = movies.filter(m => parseFloat(m.avg_rating || m.avgRating) >= 4.5);
+            recs.forEach(m => {
+                container.innerHTML += `
+                    <div class="card-scroll-item" onclick="goDetail(${m.id})">
+                        <img src="${m.poster}" alt="${m.title}">
+                        <div class="mt-2"><small class="text-white fw-bold text-truncate d-block">${m.title}</small></div>
+                    </div>`;
+            });
+        }
+
+        function loadAllMovies(dataFilm) {
+            const container = document.getElementById('movieGrid');
+            container.innerHTML = '';
+            dataFilm.forEach(m => {
+                const rating = m.avg_rating || m.avgRating || 0;
+                container.innerHTML += `
+                    <div class="col-6 col-md-3 col-lg-2">
+                        <div class="movie-card" onclick="goDetail(${m.id})">
+                            <img src="${m.poster}" alt="${m.title}">
+                            <div class="p-3">
+                                <h6 class="text-white text-truncate mb-1">${m.title}</h6>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="badge bg-secondary" style="font-size: 0.7rem;">${m.genre}</span>
+                                    <small class="text-warning"><i class="fas fa-star"></i> ${rating}</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>`;
+            });
+        }
+
+        function searchMovie(keyword) {
+            const filtered = movies.filter(m => m.title.toLowerCase().includes(keyword.toLowerCase()));
+            loadAllMovies(filtered);
+        }
+        
+        function filterMovies() {
+            const genre = document.getElementById('genreFilter').value;
+            if(genre === "All") loadAllMovies(movies);
+            else loadAllMovies(movies.filter(m => m.genre === genre));
+        }
+
+        function goDetail(id) { window.location.href = `film.html?id=${id}`; }
+    </script>
+</body>
+</html>

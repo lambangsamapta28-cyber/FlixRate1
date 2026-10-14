@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail Film - FlixRate</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* CSS KHUSUS HALAMAN INI */
+        .hero-video-wrapper {
+            position: relative;
+            width: 100%;
+            height: 65vh;
+            background-color: #000;
+            overflow: hidden;
+            pointer-events: none; 
+            user-select: none;
+        }
+
+        .hero-video-wrapper iframe {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 1; 
+            transform: scale(1.2); 
+        }
+
+        .content-section-red {
+            background: linear-gradient(to bottom, #4a0e0e 0%, #1a0505 100%);
+            padding-top: 4rem;
+            padding-bottom: 4rem;
+            border-top: 4px solid #ffc107;
+            box-shadow: 0 -10px 25px rgba(0,0,0,0.7);
+            position: relative;
+            z-index: 5;
+        }
+
+        .poster-detail {
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.1);
+            width: 100%;
+        }
+
+        .movie-title {
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+            font-weight: 900;
+            letter-spacing: 1px;
+        }
+        
+        .synopsis-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #e0e0e0;
+            text-align: justify;
+        }
+    </style>
+</head>
+<body style="background-color: #1a0505;">
+
+    <nav class="navbar navbar-dark navbar-transparent fixed-top pt-3 bg-dark bg-opacity-50 shadow-sm">
+        <div class="container px-4">
+            <a class="btn btn-dark btn-sm rounded-pill px-4 py-2 border-secondary fw-bold" href="index.html">
+                <i class="fas fa-arrow-left me-2"></i> Kembali
+            </a>
+            <span class="navbar-text fw-bold" style="font-size: 1.5rem; text-shadow: 2px 2px 4px black;">
+                <span class="text-flix">FLIX</span><span class="text-rate">RATE</span>
+            </span>
+        </div>
+    </nav>
+
+    <div id="topVideoSection" class="hero-video-wrapper">
+        <iframe id="heroFrame" src="" title="Trailer" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    </div>
+
+    <section class="content-section-red">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 col-lg-3 d-none d-md-block">
+                    <img id="posterImage" src="" alt="Poster" class="img-fluid poster-detail mb-4">
+                </div>
+
+                <div class="col-md-8 col-lg-9">
+                    <h1 id="movieTitle" class="display-3 movie-title mb-2 text-white">Loading...</h1>
+                    
+                    <div class="d-flex align-items-center mb-5 gap-3 text-white">
+                        <span id="movieGenre" class="badge bg-warning text-dark px-3 py-2 fs-6 shadow">GENRE</span>
+                        <span class="fs-5">
+                            <i class="fas fa-star text-warning"></i> <span id="avgRating">0.0</span> <small class="opacity-75">/ 5</small>
+                        </span>
+                        <span id="movieYear" class="opacity-75 border-start border-secondary ps-3 ms-1">-</span>
+                        <span class="opacity-75 border-start border-secondary ps-3 ms-1">2j 15m</span>
+                    </div>
+
+                    <div class="d-md-none text-center mb-4">
+                        <img id="posterImageMobile" src="" class="img-fluid rounded shadow" style="max-width: 180px;">
+                    </div>
+
+                    <h4 class="fw-bold border-bottom border-secondary pb-2 mb-3 text-white">Sinopsis</h4>
+                    <p id="movieDesc" class="synopsis-text">
+                        Memuat sinopsis film...
+                    </p>
+                    <div class="mt-4 text-white border-top border-secondary pt-3">
+                        <div class="row g-3"> <div class="col-6 col-md-4">
+                             <small class="text-white-50 d-block text-uppercase fw-bold" style="letter-spacing: 1px;">Sutradara</small>
+                                <span id="movieDirector" class="fs-6">-</span>
+                            </div>
+
+                            <div class="col-6 col-md-4">
+                                <small class="text-white-50 d-block text-uppercase fw-bold" style="letter-spacing: 1px;">Produser</small>
+                                <span id="movieProducer" class="fs-6">-</span>
+                            </div>
+
+                            <div class="col-6 col-md-4">
+                                <small class="text-white-50 d-block text-uppercase fw-bold" style="letter-spacing: 1px;">Negara</small>
+                                <span id="movieCountry" class="fs-6">-</span>
+                            </div>
+
+                            <div class="col-12">
+                                <small class="text-white-50 d-block text-uppercase fw-bold" style="letter-spacing: 1px;">Pemeran Utama</small>
+                                <span id="movieActors" class="fs-6 text-light">-</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-5 p-4 rounded bg-black bg-opacity-25 border border-secondary shadow">
+                        <div id="ratingSection">
+                            <h5 class="mb-3 text-white"><i class="fas fa-heart text-danger"></i> Berikan Penilaian Anda</h5>
+                            
+                            <div id="ratingForm" class="d-none">
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="star-rating">
+                                        <i class="fas fa-star fa-lg" onclick="selectRate(1)" id="star1"></i>
+                                        <i class="fas fa-star fa-lg" onclick="selectRate(2)" id="star2"></i>
+                                        <i class="fas fa-star fa-lg" onclick="selectRate(3)" id="star3"></i>
+                                        <i class="fas fa-star fa-lg" onclick="selectRate(4)" id="star4"></i>
+                                        <i class="fas fa-star fa-lg" onclick="selectRate(5)" id="star5"></i>
+                                    </div>
+                                    <button onclick="submitRating()" class="btn btn-warning btn-sm rounded-pill px-4 fw-bold">Kirim</button>
+                                </div>
+                                <input type="hidden" id="selectedRatingValue" value="0">
+                            </div>
+
+                            <div id="loginPrompt" class="d-none">
+                                <p class="text-white-50 mb-0">Silakan <a href="index.html" class="text-warning fw-bold text-decoration-none">Login</a> untuk memberi rating.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-black text-center py-4 border-top border-secondary" style="position: relative; z-index: 10;">
+        <div class="container">
+            <div class="mb-3">
+                <span class="fw-bold" style="font-size: 1.2rem;">
+                    <span class="text-flix">FLIX</span><span class="text-rate">RATE</span>
+                </span>
+            </div>
+            
+            <p class="text-white-50 small mb-3">
+                Platform review dan database film terbaik untuk pecinta sinema Indonesia.
+            </p>
+
+            <div class="mb-2">
+                <a href="https://www.instagram.com/flixrate.id/" target="_blank" class="text-decoration-none social-link">
+                    <i class="fab fa-instagram fa-lg text-warning"></i> 
+                    <span class="ms-2 fw-bold text-white">@flixrate.id</span>
+                </a>
+            </div>
+
+            <div class="mb-3">
+                <a href="https://wa.me/6287744653560" target="_blank" class="text-decoration-none social-link">
+                    <i class="fab fa-whatsapp fa-lg text-success"></i>
+                    <span class="ms-2 text-white">Admin: 0877-4465-3560</span>
+                </a>
+            </div>
+
+            <p class="text-muted small mt-4 mb-0">&copy; 2023 FlixRate Indonesia. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let currentMovie = null;
+        let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const movieId = urlParams.get('id');
+
+            fetch('api/get_movies.php')
+            .then(res => res.json())
+            .then(data => {
+                currentMovie = data.find(m => m.id == movieId);
+                if (currentMovie) {
+                    renderMovieDetail();
+                    checkLoginForRating();
+                } else {
+                    document.body.innerHTML = "<h2 class='text-white text-center mt-5'>Film tidak ditemukan. <a href='index.html'>Kembali</a></h2>";
+                }
+            })
+            .catch(err => console.error("Gagal load film:", err));
+        });
+
+        function renderMovieDetail() {
+            document.getElementById('posterImage').src = currentMovie.poster;
+            const mobilePoster = document.getElementById('posterImageMobile');
+            if(mobilePoster) mobilePoster.src = currentMovie.poster;
+
+            document.getElementById('movieTitle').innerText = currentMovie.title;
+            document.getElementById('movieGenre').innerText = currentMovie.genre || "Movie";
+            document.getElementById('avgRating').innerText = currentMovie.avg_rating || currentMovie.avgRating || "0.0";
+            document.getElementById('movieDesc').innerText = currentMovie.description || currentMovie.desc || "Tidak ada deskripsi.";
+            // --- KODE BARU DIMULAI DARI SINI ---
+            document.getElementById('movieYear').innerText = currentMovie.release_year || '-';
+            document.getElementById('movieDirector').innerText = currentMovie.director || '-';
+            document.getElementById('movieProducer').innerText = currentMovie.producer || '-';
+            document.getElementById('movieActors').innerText = currentMovie.actors || '-';
+            document.getElementById('movieCountry').innerText = currentMovie.country || '-';
+            // --- KODE BARU SELESAI ---
+
+            const iframe = document.getElementById('heroFrame');
+            if (currentMovie.trailer_url) {
+                const videoId = currentMovie.trailer_url.split('/').pop(); 
+                const cleanUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=0&showinfo=0&rel=0&disablekb=1&iv_load_policy=3`;
+                iframe.src = cleanUrl;
+            } else {
+                document.getElementById('topVideoSection').innerHTML = `<img src="${currentMovie.poster}" style="width:100%; height:100%; object-fit:cover;">`;
+            }
+        }
+
+        function checkLoginForRating() {
+            if (currentUser) {
+                document.getElementById('ratingForm').classList.remove('d-none');
+                document.getElementById('loginPrompt').classList.add('d-none');
+            } else {
+                document.getElementById('ratingForm').classList.add('d-none');
+                document.getElementById('loginPrompt').classList.remove('d-none');
+            }
+        }
+
+        function selectRate(n) {
+            document.getElementById('selectedRatingValue').value = n;
+            for(let i=1; i<=5; i++) {
+                const star = document.getElementById(`star${i}`);
+                if(i <= n) star.classList.add('active');
+                else star.classList.remove('active');
+            }
+        }
+
+        function submitRating() {
+            const val = document.getElementById('selectedRatingValue').value;
+            if(val == 0) return alert("Pilih bintang dulu!");
+
+            fetch('api/rate.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    user_id: currentUser.id,
+                    movie_id: currentMovie.id,
+                    rating: val
+                })
+            })
+            .then(res => res.json())
+            .then(response => {
+                if(response.status === 'success') {
+                    alert("Rating terkirim!");
+                    location.reload();
+                } else {
+                    alert("Rating tersimpan (Simulasi/API Error).");
+                }
+            });
+        }
+    </script>
+</body>
+</html>
