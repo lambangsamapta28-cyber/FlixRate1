@@ -2,7 +2,13 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#530202">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="FlixRate">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
     <title>FlixRate - Streaming & Review</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
@@ -153,13 +159,6 @@
                 <a href="https://www.instagram.com/flixrate.id/" target="_blank" class="text-decoration-none social-link">
                     <i class="fab fa-instagram fa-lg text-warning"></i> 
                     <span class="ms-2 fw-bold text-white">@flixrate.id</span>
-                </a>
-            </div>
-
-            <div class="mb-3">
-                <a href="https://wa.me/6287744653560" target="_blank" class="text-decoration-none social-link">
-                    <i class="fab fa-whatsapp fa-lg text-success"></i>
-                    <span class="ms-2 text-white">Admin: 0877-4465-3560</span>
                 </a>
             </div>
 
@@ -343,5 +342,42 @@
 
         function goDetail(id) { window.location.href = `film.html?id=${id}`; }
     </script>
+
+    <!-- PWA Install Prompt Banner -->
+    <div id="pwaInstallBanner" class="pwa-install-banner d-none">
+        <div class="d-flex align-items-center justify-content-between">
+            <div class="d-flex align-items-center gap-2">
+                <img src="icons/icon-192.png" alt="FlixRate Logo" style="width: 40px; height: 40px; border-radius: 8px;">
+                <div>
+                    <h6 class="mb-0 text-white fw-bold" style="font-size: 0.9rem;">Pasang FlixRate</h6>
+                    <small class="text-secondary" style="font-size: 0.75rem;">Akses cepat & hemat kuota</small>
+                </div>
+            </div>
+            <div class="d-flex gap-2">
+                <button id="pwaInstallDismiss" class="btn btn-sm btn-outline-secondary py-1 px-2" style="font-size: 0.8rem;">Nanti</button>
+                <button id="pwaInstallBtn" class="btn btn-sm btn-warning fw-bold py-1 px-3" style="font-size: 0.8rem;">Pasang</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Bottom Navigation Bar -->
+    <nav class="mobile-bottom-nav">
+        <button class="nav-item-btn active" id="mNavHome" onclick="showHome()">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </button>
+        <button class="nav-item-btn" id="mNavFilms" onclick="showFilms()">
+            <i class="fas fa-film"></i>
+            <span>Film</span>
+        </button>
+        <button class="nav-item-btn d-none" id="mNavAdmin" onclick="showAdminDashboard()">
+            <i class="fas fa-gauge-high"></i>
+            <span>Admin</span>
+        </button>
+        <button class="nav-item-btn" id="mNavUser" onclick="handleMobileAuthClick()">
+            <i class="fas fa-user"></i>
+            <span id="mNavUserLabel">Sign In</span>
+        </button>
+    </nav>
 </body>
 </html>
