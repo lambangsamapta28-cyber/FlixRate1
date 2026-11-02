@@ -178,19 +178,32 @@
 
         // --- FETCH DATA ---
         function fetchMovies() {
-            fetch('api/get_movies.php')
-            .then(response => response.json())
-            .then(data => {
-                movies = data;
-                if(movies.length > 0) {
-                    loadHero();
-                    loadRecommendations();
-                    loadAllMovies(movies);
-                }
+            const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+            const primarySource = isLocal ? 'api/get_movies.php' : 'movies.json';
+            const fallbackSource = isLocal ? 'movies.json' : 'api/get_movies.php';
+
+            fetch(primarySource)
+            .then(response => {
+                if (!response.ok) throw new Error('Primary source not ok');
+                return response.json();
             })
-            .catch(error => {
-                console.error('Error:', error);
+            .then(data => handleMovieData(data))
+            .catch(err => {
+                console.warn('Gagal memuat primary source, mencoba fallback:', err);
+                fetch(fallbackSource)
+                .then(res => res.json())
+                .then(data => handleMovieData(data))
+                .catch(e => console.error('Gagal memuat film:', e));
             });
+        }
+
+        function handleMovieData(data) {
+            movies = Array.isArray(data) ? data : [];
+            if(movies.length > 0) {
+                loadHero();
+                loadRecommendations();
+                loadAllMovies(movies);
+            }
         }
 
         // --- NAVIGASI ---

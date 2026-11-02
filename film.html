@@ -201,19 +201,33 @@
             const urlParams = new URLSearchParams(window.location.search);
             const movieId = urlParams.get('id');
 
-            fetch('api/get_movies.php')
-            .then(res => res.json())
-            .then(data => {
-                currentMovie = data.find(m => m.id == movieId);
+                        const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+            const primarySource = isLocal ? 'api/get_movies.php' : 'movies.json';
+            const fallbackSource = isLocal ? 'movies.json' : 'api/get_movies.php';
+
+            const onDataLoaded = (data) => {
+                const list = Array.isArray(data) ? data : [];
+                currentMovie = list.find(m => m.id == movieId);
                 if (currentMovie) {
                     renderMovieDetail();
                     checkLoginForRating();
                 } else {
                     document.body.innerHTML = "<h2 class='text-white text-center mt-5'>Film tidak ditemukan. <a href='index.html'>Kembali</a></h2>";
                 }
+            };
+
+            fetch(primarySource)
+            .then(res => {
+                if (!res.ok) throw new Error('Primary source not ok');
+                return res.json();
             })
-            .catch(err => console.error("Gagal load film:", err));
-        });
+            .then(data => onDataLoaded(data))
+            .catch(() => {
+                fetch(fallbackSource)
+                .then(res => res.json())
+                .then(data => onDataLoaded(data))
+                .catch(err => console.error("Gagal load film:", err));
+            });       });
 
         function renderMovieDetail() {
             document.getElementById('posterImage').src = currentMovie.poster;
